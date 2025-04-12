@@ -1,0 +1,16 @@
+﻿using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Infrastructure;
+
+public static class InfrastructureServiceExtenstions
+{
+    public static IServiceCollection AddInfrastructureService(this IServiceCollection services, ConfigurationManager config)
+    {
+        var connectionString = config.GetConnectionString("DefaultConnection");
+        services.AddDbContextFactory<AppDbContext>(options => options.UseSqlServer(connectionString));
+        return services;
+    }
+}
