@@ -1,4 +1,6 @@
-﻿using Infrastructure.Data;
+﻿using Domain.Interfaces;
+using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +13,8 @@ public static class InfrastructureServiceExtenstions
     {
         var connectionString = config.GetConnectionString("DefaultConnection");
         services.AddDbContextFactory<AppDbContext>(options => options.UseSqlServer(connectionString));
+
+        services.AddTransient<ICallRecordRepository, CallRecordRepository>();
         return services;
     }
 }
