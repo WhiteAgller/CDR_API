@@ -2,7 +2,7 @@
 
 public enum Currency
 {
-    GBK,
+    GBP,
     USD,
     EUR
 }
