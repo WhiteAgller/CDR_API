@@ -1,0 +1,38 @@
+﻿version: '3.8'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Web/Dockerfile 
+    image: cdr_api
+    ports:
+      - "5103:8080" 
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - SA_PASSWORD=/run/secrets/db-password
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CDR_API;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=true 
+    secrets:
+      - db-password
+    depends_on:
+      - sqlserver
+    restart: always
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest 
+    ports:
+      - "1433:1433" 
+    environment:
+      - SA_PASSWORD=/run/secrets/db-password 
+      - ACCEPT_EULA=Y
+    secrets:
+      - db-password
+    restart: always
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "${SA_PASSWORD}", "-Q", "SELECT 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+      
+secrets:
+  my_secret:
+    file: db/password.txt
