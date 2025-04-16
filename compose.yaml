@@ -1,5 +1,4 @@
-﻿version: '3.8'
-services:
+﻿services:
   api:
     build:
       context: .
@@ -34,5 +33,5 @@ services:
       start_period: 60s
       
 secrets:
-  my_secret:
+  db-password:
     file: db/password.txt
