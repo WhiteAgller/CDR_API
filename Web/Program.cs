@@ -1,4 +1,5 @@
 using Application.CallRecords.Commands;
+using CDR_API;
 using Domain.CallRecordAggregate;
 using FastEndpoints;
 using FastEndpoints.Swagger;
@@ -14,6 +15,7 @@ builder.Services.AddMediatR(options =>
 
 builder.Services.AddInfrastructureService(builder.Configuration);
 
+builder.Services.AddSingleton<IStartupFilter, MigrateDatabaseOnStartup>();
 builder.Services.AddFastEndpoints()
     .SwaggerDocument(o =>
     {

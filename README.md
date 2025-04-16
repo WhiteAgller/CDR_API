@@ -11,6 +11,7 @@
 2. Add proper logging (using for example serilog).
 3. Have functional tests that test the endpoint calls.
 4. More complex data validation during upload.
+5. Have a CI/CD Pipeline.
 
 ## Assumptions
 // - //

@@ -11,10 +11,10 @@ public static class InfrastructureServiceExtenstions
 {
     public static IServiceCollection AddInfrastructureService(this IServiceCollection services, ConfigurationManager config)
     {
-        var connectionString = config.GetConnectionString("DefaultConnection");
+        var connectionString = config.GetConnectionString("DefaultConnection"); 
         services.AddDbContextFactory<AppDbContext>(options => options.UseSqlServer(connectionString));
-
         services.AddTransient<ICallRecordRepository, CallRecordRepository>();
+        services.AddSingleton<DatabaseMigrator>();
         return services;
     }
 }
